@@ -1,9 +1,14 @@
 import { json, urlencoded } from "body-parser";
-import express from "express";
+import express, { Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
+import "reflect-metadata";
+import "./shared/container";
 
-export const createServer = () => {
+import routes from "./routes";
+
+// @ts-ignore
+export const createServer: Express = () => {
   const app = express();
   app
     .disable("x-powered-by")
@@ -11,12 +16,7 @@ export const createServer = () => {
     .use(urlencoded({ extended: true }))
     .use(json())
     .use(cors())
-    .get("/message/:name", (req, res) => {
-      return res.json({ message: `hello ${req.params.name}` });
-    })
-    .get("/healthz", (req, res) => {
-      return res.json({ ok: true });
-    });
+    .use(routes);
 
   return app;
 };

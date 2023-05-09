@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ["next", "turbo", "prettier"],
+  extends: ["plugin:@typescript-eslint/recommended","turbo", "prettier"],
   settings: {
     react: {
       version: "detect",
