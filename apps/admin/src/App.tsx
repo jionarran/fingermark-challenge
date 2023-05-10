@@ -1,8 +1,15 @@
 import * as React from "react";
 import "./App.css";
 import { CounterButton, NewTabLink } from "ui";
+import { connect } from "socket.io-client";
 
 function App() {
+  const socket = connect("http://localhost:3333");
+
+  socket.on("refresh", (socket) => {
+    console.log("socket", socket);
+  });
+
   return (
     <div className="container">
       <h1 className="title">
