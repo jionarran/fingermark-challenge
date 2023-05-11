@@ -5,9 +5,11 @@ const kioskController = new KioskController();
 
 const kioskRoutes: Router = Router();
 
-kioskRoutes.get("/", (req, res) => kioskController.findOne(req, res));
+kioskRoutes.get("/:id", (req, res) => kioskController.findOne(req, res));
 
-kioskRoutes.post("/", (req, res) => kioskController.create(req, res));
+kioskRoutes.get("/", (req, res) => kioskController.find(req, res)); // ok
+
+kioskRoutes.post("/", (req, res) => kioskController.create(req, res)); // ok
 
 kioskRoutes.put("/:id", (req, res) => kioskController.update(req, res));
 

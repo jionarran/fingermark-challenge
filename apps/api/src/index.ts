@@ -1,10 +1,14 @@
-import { createServer } from "./server";
+import { serverWS } from "./server";
 import { log } from "logger";
+import Scheduler from "./provider/scheduler/scheduler";
+import "./provider/websockets/websockets";
+import { io } from "./server";
 
 const port = process.env.PORT || 3333;
 // @ts-ignore
-const server = createServer();
 
-server.listen(port, () => {
+serverWS.listen(port, async () => {
+  Scheduler.start();
+
   log(`api running on ${port}`);
 });

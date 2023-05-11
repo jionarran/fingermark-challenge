@@ -1,5 +1,6 @@
 import { injectable, inject } from "tsyringe";
 import { IKioskRepository } from "../../dtos/IKioskRepository";
+import HandleError from "../../errors/HandleError";
 
 @injectable()
 export default class KioskDelete {
@@ -10,7 +11,11 @@ export default class KioskDelete {
   ) {}
 
   public async execute(id: string) {
-    const kiosk = await this.kioskRepository.delete(id);
-    return kiosk;
+    try {
+      const kiosk = await this.kioskRepository.delete(id);
+      return kiosk;
+    } catch (err) {
+      throw new HandleError("An error occurred while deleting");
+    }
   }
 }

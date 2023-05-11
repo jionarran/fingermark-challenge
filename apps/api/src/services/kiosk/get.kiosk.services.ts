@@ -1,5 +1,6 @@
 import { injectable, inject } from "tsyringe";
-import { IKiosk, IKioskRepository } from "../../dtos/IKioskRepository";
+import { IFilter, IKioskRepository } from "../../dtos/IKioskRepository";
+import HandleError from "../../errors/HandleError";
 
 @injectable()
 export default class KioskGet {
@@ -9,8 +10,11 @@ export default class KioskGet {
     private kioskRepository: IKioskRepository
   ) {}
 
-  public async execute(id: string) {
-    const kiosk = await this.kioskRepository.findOne(id);
+  public async execute(filter: IFilter | undefined) {
+    const kiosk = await this.kioskRepository.findOne(filter ?? {});
+
+    if (!kiosk) throw new HandleError("Kiosk not found", 404);
+
     return kiosk;
   }
 }

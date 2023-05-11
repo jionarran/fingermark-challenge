@@ -11,10 +11,11 @@ datasource db {
 }
 
 model Kiosk {
-  id            String  @id @default(uuid()) @map("_id") @db.ObjectId
-  serialKey     String
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  serialKey     String   @unique
   description   String
-  isKioskClosed Boolean @default(true)
-  storeOpensAt  String
-  storeClosedAt String
+  isKioskClosed Boolean  @default(true)
+  storeOpensAt  DateTime
+  storeClosedAt DateTime
+  createdAt     DateTime @default(now())
 }

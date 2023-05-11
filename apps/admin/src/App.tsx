@@ -1,28 +1,37 @@
-import * as React from "react";
 import "./App.css";
-import { CounterButton, NewTabLink } from "ui";
+import { Box, Layout, Routes, Route, Typography } from "ui";
 import { connect } from "socket.io-client";
+import Home from "./feature/Kiosk/HomePage";
+import { FormPage } from "./pages/FormPage";
+import { useAppDispatch } from "./app/hooks";
+import { openOrClose } from "./feature/Kiosk/KioskSlice";
 
 function App() {
   const socket = connect("http://localhost:3333");
+  const dispatch = useAppDispatch();
+
+  console.log("CONECTOU O APP.JSX");
 
   socket.on("refresh", (socket) => {
-    console.log("socket", socket);
+    dispatch(openOrClose(socket));
   });
 
   return (
-    <div className="container">
-      <h1 className="title">
-        Admin <br />
-        <span>Kitchen Sink</span>
-      </h1>
-      <CounterButton />
-      <p className="description">
-        Built With{" "}
-        <NewTabLink href="https://turbo.build/repo">Turborepo</NewTabLink> +{" "}
-        <NewTabLink href="https://vitejs.dev/">Vite</NewTabLink>
-      </p>
-    </div>
+    
+    <Box className="height 100vh" component='main'>
+      <Layout>
+        <Routes>
+          <Route path='/' element={<Home/>}/>
+          <Route path='/create' element={<FormPage/>}/>
+          <Route path='*' element={
+            <Box sx={{ color: 'white'}}>
+              <Typography variant='h1'>404</Typography>
+              <Typography variant='h2'>Page not found!</Typography>
+            </Box>
+          } />
+        </Routes>
+      </Layout>
+    </Box>
   );
 }
 
