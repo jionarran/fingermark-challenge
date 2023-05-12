@@ -30,19 +30,19 @@ export const FormPage = (props: IPropMainPage) => {
     };
 
     const checkValidations = (data: any) => {
-
         if(!data.description || isNaN(data.storeOpensAt) || isNaN(data.storeClosedAt) || !data.serialKey){
             toast.error("It is necessary to complete all the information");
             return;
         }
 
-        let startDate = new Date(data.storeOpensAt).getTime()
-        let closeDate = new Date(data.storeClosedAt).getTime()
-
+        
         if(new Date(data.storeOpensAt).getTime() == new Date(data.storeClosedAt).getTime()){
             toast.error("Time fields must be different");
             return;
         }
+        
+        let startDate = new Date(data.storeOpensAt).getTime();
+        let closeDate = new Date(data.storeClosedAt).getTime();
 
         if(startDate > closeDate) {
             toast.error("The opening time must be earlier than the closing time");

@@ -13,7 +13,6 @@ export default class CheckOpenCloseKiosk {
 
   public async execute() {
     const currentTime: string = getCurrentTime();
-    console.log("currentTime", currentTime);
 
     let updatedOpen;
     let updatedClosed;

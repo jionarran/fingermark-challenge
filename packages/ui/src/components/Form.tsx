@@ -5,12 +5,11 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import CircularProgress from '@mui/material/CircularProgress';
 import convertToInputDateTime from '../../utils/convertToInputDateTime';
-
 import "react-datepicker/dist/react-datepicker.css";
-
+import formatDate from '../../utils/formatDate';
 
 interface IData {
     description?: string;
@@ -38,7 +37,6 @@ export function Form({ children, data, onSave, loading, onEdit }: IFormProps) {
 
   const onChange = (e: any, prop?: string) => {
     let _kioskData:IData = {...kioskData};
-    console.log('onChange', e?.['$d']);
 
     if(e?.['$d'] && prop){
         //@ts-ignore
@@ -50,8 +48,6 @@ export function Form({ children, data, onSave, loading, onEdit }: IFormProps) {
     setRegister({ ..._kioskData });
   };
 
-  console.log("loading", loading);
-  
   return (
     <Box>
         <div className='flex justify-center text-3xl mt-10'>{data?.id ? "Edit Kiosk" : "New Kiosk"}</div>
@@ -111,9 +107,13 @@ export function Form({ children, data, onSave, loading, onEdit }: IFormProps) {
                         <CButton onClick={() => {
                             let _data = {
                                 ...kioskData,
-                                storeOpensAt: convertToInputDateTime(kioskData?.storeOpensAt || "", true),
-                                storeClosedAt: convertToInputDateTime(kioskData?.storeClosedAt || "", true)
+                                storeOpensAt: formatDate(valueOpen["$d"] ?? valueOpen),
+                                storeClosedAt: formatDate(valueClose["$d"] ?? valueClose)
                             }
+
+                            console.log("valueOpen", valueOpen);
+                            console.log("valueClose", valueClose);
+
                             if(kioskData.id){
                                 onEdit(_data)
                             }else{

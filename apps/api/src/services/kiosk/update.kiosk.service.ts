@@ -1,6 +1,7 @@
-import { injectable, inject } from "tsyringe";
+import { injectable, inject, container } from "tsyringe";
 import { IKiosk, IKioskRepository } from "../../dtos/IKioskRepository";
 import HandleError from "../../errors/HandleError";
+import CheckOpenCloseKiosk from "../../services/checkOpenCloseKiosk";
 
 @injectable()
 export default class KioskUpdate {
@@ -23,6 +24,9 @@ export default class KioskUpdate {
         throw new HandleError("Already exists a kiosk with this serial key");
 
       const kiosk = await this.kioskRepository.update(id, data);
+      const checkOpenCloseKiosk = container.resolve(CheckOpenCloseKiosk);
+      checkOpenCloseKiosk.execute();
+
       return kiosk;
     } catch (err: any) {
       console.log(err);

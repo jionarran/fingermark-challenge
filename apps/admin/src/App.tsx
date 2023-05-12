@@ -10,8 +10,6 @@ function App() {
   const socket = connect("http://localhost:3333");
   const dispatch = useAppDispatch();
 
-  console.log("CONECTOU O APP.JSX");
-
   socket.on("refresh", (socket) => {
     dispatch(openOrClose(socket));
   });

@@ -4,16 +4,8 @@ import api from "../../api/api";
 export interface IInitialStateKiosk {
   kioskList: IKiosk[];
   loading: boolean;
-  loadingCreate: false;
+  loadingCreate: boolean;
   selectedKiosk?: IKiosk | undefined;
-}
-
-interface CustomError {
-  message: string;
-  response?: {
-    status: number;
-    data: any;
-  };
 }
 
 interface IError {
@@ -97,8 +89,6 @@ const kioskSlice: any = createSlice({
       state.selectedKiosk = action.payload;
     },
     setLoading: (state, action) => {
-      console.log("action", action);
-
       state.loadingCreate = action.payload;
     },
     openOrClose: (state, action) => {
@@ -112,46 +102,48 @@ const kioskSlice: any = createSlice({
     },
   },
   extraReducers: {
-    [getKiosks.pending as any]: (state: any) => {
+    [getKiosks.pending as any]: (state: IInitialStateKiosk) => {
       state.loading = true;
     },
-    [getKiosks.fulfilled as any]: (state: any, action: any) => {
+    [getKiosks.fulfilled as any]: (state: IInitialStateKiosk, action: any) => {
       state.loading = false;
       state.kioskList = action.payload.data;
     },
-    [getKiosks.rejected as any]: (state: any, action: any) => {
+    [getKiosks.rejected as any]: (state: IInitialStateKiosk, action: any) => {
       state.loading = false;
-      state.message_error = "Ocorreu um erro ao listar companias";
     },
-    [createKiosk.pending as any]: (state: any) => {
+    [createKiosk.pending as any]: (state: IInitialStateKiosk) => {
       state.loadingCreate = true;
     },
-    [createKiosk.fulfilled as any]: (state: any, action: any) => {
+    [createKiosk.fulfilled as any]: (
+      state: IInitialStateKiosk,
+      action: any
+    ) => {
       state.loadingCreate = false;
     },
-    [createKiosk.rejected as any]: (state: any, action: any) => {
+    [createKiosk.rejected as any]: (state: IInitialStateKiosk, action: any) => {
       state.loadingCreate = false;
-      state.message_error = "Ocorreu um erro ao listar companias";
     },
-    [editKiosk.pending as any]: (state: any) => {
+    [editKiosk.pending as any]: (state: IInitialStateKiosk) => {
       state.loadingCreate = true;
     },
-    [editKiosk.fulfilled as any]: (state: any, action: any) => {
+    [editKiosk.fulfilled as any]: (state: IInitialStateKiosk, action: any) => {
       state.loadingCreate = false;
     },
-    [editKiosk.rejected as any]: (state: any, action: any) => {
+    [editKiosk.rejected as any]: (state: IInitialStateKiosk, action: any) => {
       state.loadingCreate = false;
-      state.message_error = "Ocorreu um erro ao listar companias";
     },
-    [deleteKiosk.pending as any]: (state: any) => {
+    [deleteKiosk.pending as any]: (state: IInitialStateKiosk) => {
       state.loading = true;
     },
-    [deleteKiosk.fulfilled as any]: (state: any, action: any) => {
+    [deleteKiosk.fulfilled as any]: (
+      state: IInitialStateKiosk,
+      action: any
+    ) => {
       state.loading = false;
     },
-    [deleteKiosk.rejected as any]: (state: any, action: any) => {
+    [deleteKiosk.rejected as any]: (state: IInitialStateKiosk, action: any) => {
       state.loading = false;
-      state.message_error = "Ocorreu um erro ao listar companias";
     },
   },
 });

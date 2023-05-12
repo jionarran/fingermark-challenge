@@ -13,12 +13,9 @@ export default class KioskCreate {
   ) {}
 
   public async execute(data: IKiosk) {
-    console.log("data.serialKey", data.serialKey);
     const alreadyExist = await this.kioskRepository.findOne({
       serialKey: data.serialKey,
     });
-
-    console.log("alreadyExist", alreadyExist);
 
     if (alreadyExist)
       throw new HandleError("Already exists a kiosk with this serial key");
@@ -31,7 +28,6 @@ export default class KioskCreate {
         getBaseTime() + (data.storeOpensAt + "").substring(11, 24)
       );
 
-      console.log("---", data);
       const kiosk = await this.kioskRepository.create(data);
 
       const checkOpenCloseKiosk = container.resolve(CheckOpenCloseKiosk);

@@ -28,7 +28,6 @@ export const MainPage = (props: IPropMainPage) => {
     const kioskList = kioskState?.kioskList;
 
     useEffect(() => {
-        console.log('LISTAGEM');
         dispatch(getKiosks())
     }, []);
 
@@ -49,8 +48,6 @@ export const MainPage = (props: IPropMainPage) => {
         };
     };
 
-    console.log('loadingNormalList', loading);
-
     return (
         <div>
             <ToastContainer/>
@@ -63,9 +60,11 @@ export const MainPage = (props: IPropMainPage) => {
                 </div>
             : 
             <> 
-                <div className="mr-96 mt-24 float-right mb-5">
-                    <CButton size='large' onClick={() => navigate("/create")}>Add</CButton>
-                </div>
+                {!loading ? 
+                    <div className="mr-96 mt-24 float-right mb-5">
+                        <CButton size='large' onClick={() => navigate("/create")}>Add</CButton>
+                    </div> 
+                : undefined}
                 <CTable loading={loading} onEdit={onEdit} navigate={navigate} onDelete={onDelete} kioskState={kioskState}/>
             </>}
         </div>

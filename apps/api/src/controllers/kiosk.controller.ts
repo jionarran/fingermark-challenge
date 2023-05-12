@@ -11,7 +11,6 @@ export default class KioskController {
 
   public async create(req: Request, res: Response) {
     const data = req.body;
-    console.log("data", data);
     const kioksService = container.resolve(KioskCreate);
     const kiosk = await kioksService.execute(data);
     return res.json(kiosk);
