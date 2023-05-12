@@ -18,7 +18,7 @@ interface IKiosk {
     id: string;
 }
 
-export const MainPage = (props: IPropMainPage) => {
+export const MainPage = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     
@@ -50,7 +50,6 @@ export const MainPage = (props: IPropMainPage) => {
 
     return (
         <div>
-            <ToastContainer/>
             {kioskList?.length === 0 && !loading ? 
                 <div className="text-center mt-44">
                     <h1 className='text-6xl'>No kiosk has been added!</h1>

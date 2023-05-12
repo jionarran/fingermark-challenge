@@ -5,6 +5,7 @@ import Home from "./feature/Kiosk/HomePage";
 import { FormPage } from "./pages/FormPage";
 import { useAppDispatch } from "./app/hooks";
 import { openOrClose } from "./feature/Kiosk/KioskSlice";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const socket = connect("http://localhost:3333");
@@ -17,6 +18,7 @@ function App() {
   return (
     
     <Box className="height 100vh" component='main'>
+      <ToastContainer/>
       <Layout>
         <Routes>
           <Route path='/' element={<Home/>}/>

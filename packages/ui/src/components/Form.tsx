@@ -59,10 +59,10 @@ export function Form({ children, data, onSave, loading, onEdit }: IFormProps) {
                 </div> :
                 <>
                     <div className='w-11/12 m-auto'>
-                        <TextField title='Description' style={{ width: "100%" }} placeholder='Description' value={kioskData.description} onChange={onChange} name='description' autoFocus/>
+                        <TextField inputProps={{ maxLength: 32}} title='Description' style={{ width: "100%" }} placeholder='Description' value={kioskData.description} onChange={onChange} name='description' autoFocus/>
                     </div>
                     <div className='w-11/12 m-auto mt-8'>
-                        <TextField title='Serial Key' style={{ width: "100%" }} placeholder='SerialKey' value={kioskData.serialKey} onChange={onChange} name='serialKey'/>
+                        <TextField inputProps={{ maxLength: 32}} title='Serial Key' style={{ width: "100%" }} placeholder='SerialKey' value={kioskData.serialKey} onChange={onChange} name='serialKey'/>
                     </div>
                     <div className='flex justify-between m-auto w-11/12 pt-7'>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -105,14 +105,14 @@ export function Form({ children, data, onSave, loading, onEdit }: IFormProps) {
                     </div>
                     <div className='w-full flex justify-end mt-14  pb-10'>
                         <CButton onClick={() => {
+
+                            console.log({ kioskData, valueOpen, valueClose });
+
                             let _data = {
                                 ...kioskData,
                                 storeOpensAt: formatDate(valueOpen["$d"] ?? valueOpen),
                                 storeClosedAt: formatDate(valueClose["$d"] ?? valueClose)
                             }
-
-                            console.log("valueOpen", valueOpen);
-                            console.log("valueClose", valueClose);
 
                             if(kioskData.id){
                                 onEdit(_data)

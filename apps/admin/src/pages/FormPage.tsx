@@ -2,7 +2,7 @@ import { Page, Form, HiArrowNarrowLeft } from "ui/src/index";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../app/hooks";
 import { createKiosk, editKiosk, getKiosks, setLoading } from "../feature/Kiosk/KioskSlice";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 interface IPropMainPage {
@@ -20,8 +20,9 @@ export const FormPage = (props: IPropMainPage) => {
 
     const onSuccess = () => {
         dispatch(getKiosks())
+        toast.success("Created Successfully");
+        console.log("Successfully created");
         navigate("/");
-        toast.success("Created Successfully")
     };
 
     const onError = (err: any) => {
@@ -30,7 +31,10 @@ export const FormPage = (props: IPropMainPage) => {
     };
 
     const checkValidations = (data: any) => {
-        if(!data.description || isNaN(data.storeOpensAt) || isNaN(data.storeClosedAt) || !data.serialKey){
+
+        console.log('checkValidations data', data);
+
+        if(!data.description || !isNaN(data.storeOpensAt) || !isNaN(data.storeClosedAt) || !data.serialKey){
             toast.error("It is necessary to complete all the information");
             return;
         }
@@ -61,7 +65,6 @@ export const FormPage = (props: IPropMainPage) => {
 
     return (
         <Page>
-            <ToastContainer/>
             <div className="w-full flex justify-center mt-32">
                 <div onClick={() => navigate("/")} className="flex w-3/6 ml-12 items-center cursor-pointer">    
                     <HiArrowNarrowLeft/>
